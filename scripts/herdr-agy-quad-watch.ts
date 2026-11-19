@@ -32,12 +32,19 @@ interface AgyQuadOptions {
   dryRun: boolean;
 }
 
+const DEFAULT_QUAD_MODELS = [
+  'gemini-4-argon-high',
+  'gemini-4-carbon-high',
+  'gemini-4-neon-high',
+  'gemini-4-hydrogen-high',
+];
+
 function parseArgs(argv: string[]): AgyQuadOptions {
   const opts: AgyQuadOptions = {
     layout: 'split',
     folder: process.cwd(),
     tabName: 'AGY 4-Split + TUI Watch',
-    models: [],
+    models: [...DEFAULT_QUAD_MODELS],
     prompts: [],
     dryRun: false,
   };
@@ -217,10 +224,10 @@ async function main(): Promise<void> {
     const t4 = splitRightDownRes.terminal as string;
 
     const agyPanes = [
-      { pane: p1, term: t1, idx: 0, label: 'agy-1' },
-      { pane: p2, term: t2, idx: 1, label: 'agy-2' },
-      { pane: p3, term: t3, idx: 2, label: 'agy-3' },
-      { pane: p4, term: t4, idx: 3, label: 'agy-4' },
+      { pane: p1, term: t1, idx: 0, label: 'Argon' },
+      { pane: p2, term: t2, idx: 1, label: 'Carbon' },
+      { pane: p3, term: t3, idx: 2, label: 'Neon' },
+      { pane: p4, term: t4, idx: 3, label: 'Hydrogen' },
     ];
 
     for (const item of agyPanes) {
@@ -281,10 +288,10 @@ async function main(): Promise<void> {
     const t4 = splitRD.terminal as string;
 
     const agyPanes = [
-      { pane: p1, term: t1, idx: 0, label: 'agy-1' },
-      { pane: p2, term: t2, idx: 1, label: 'agy-2' },
-      { pane: p3, term: t3, idx: 2, label: 'agy-3' },
-      { pane: p4, term: t4, idx: 3, label: 'agy-4' },
+      { pane: p1, term: t1, idx: 0, label: 'Argon' },
+      { pane: p2, term: t2, idx: 1, label: 'Carbon' },
+      { pane: p3, term: t3, idx: 2, label: 'Neon' },
+      { pane: p4, term: t4, idx: 3, label: 'Hydrogen' },
     ];
 
     for (const item of agyPanes) {
