@@ -33,8 +33,8 @@ interface AgyQuadOptions {
 }
 
 const DEFAULT_QUAD_MODELS = [
-  'gemini-4-argon-high',
   'gemini-4-carbon-high',
+  'gemini-4-argon-high',
   'gemini-4-neon-high',
   'gemini-4-hydrogen-high',
 ];
@@ -225,8 +225,8 @@ async function main(): Promise<void> {
     const t4 = splitRightDownRes.terminal as string;
 
     const agyPanes = [
-      { pane: p1, term: t1, idx: 0, label: 'Argon' },
-      { pane: p2, term: t2, idx: 1, label: 'Carbon' },
+      { pane: p1, term: t1, idx: 0, label: 'Carbon' },
+      { pane: p2, term: t2, idx: 1, label: 'Argon' },
       { pane: p3, term: t3, idx: 2, label: 'Neon' },
       { pane: p4, term: t4, idx: 3, label: 'Hydrogen' },
     ];
@@ -251,12 +251,12 @@ async function main(): Promise<void> {
         encoding: 'utf8',
       });
     }
-    const tuiCmd = buildTuiCmd([t1, t2, t3, t4]);
+    const tuiCmd = buildTuiCmd([t2, t1, t3, t4]);
     console.log(`  📺 [TUI-Monitor] (${tTui}) -> ${tuiCmd}`);
     runJson(HC_BIN, ['send', tTui, tuiCmd], opts.dryRun);
 
-    // 포커스를 첫 번째 agy 패널로 이동
-    runJson(HERDR_APP, ['do', 'pane.focus', '--pane', p1], opts.dryRun);
+    // 포커스를 Argon 패널(우상단)로 이동
+    runJson(HERDR_APP, ['do', 'pane.focus', '--pane', p2], opts.dryRun);
 
     console.log(`\n✅ 구성 완료! (한 화면 5패널: 좌측 4분할 agy 코딩 + 우측 통합 TUI 관제)`);
     console.log(`   ┌─────────────┬─────────────┬──────────────────────────┐`);
@@ -290,8 +290,8 @@ async function main(): Promise<void> {
     const t4 = splitRD.terminal as string;
 
     const agyPanes = [
-      { pane: p1, term: t1, idx: 0, label: 'Argon' },
-      { pane: p2, term: t2, idx: 1, label: 'Carbon' },
+      { pane: p1, term: t1, idx: 0, label: 'Carbon' },
+      { pane: p2, term: t2, idx: 1, label: 'Argon' },
       { pane: p3, term: t3, idx: 2, label: 'Neon' },
       { pane: p4, term: t4, idx: 3, label: 'Hydrogen' },
     ];
@@ -322,7 +322,7 @@ async function main(): Promise<void> {
         encoding: 'utf8',
       });
     }
-    const tuiCmd = buildTuiCmd([t1, t2, t3, t4]);
+    const tuiCmd = buildTuiCmd([t2, t1, t3, t4]);
     runJson(HC_BIN, ['send', tTui, tuiCmd], opts.dryRun);
 
     console.log(`\n✅ 구성 완료! 탭1(4분할 agy)과 탭2(통합 TUI 관제)가 생성되었습니다.\n`);
