@@ -260,9 +260,9 @@ async function main(): Promise<void> {
 
     console.log(`\n✅ 구성 완료! (한 화면 5패널: 좌측 4분할 agy 코딩 + 우측 통합 TUI 관제)`);
     console.log(`   ┌─────────────┬─────────────┬──────────────────────────┐`);
-    console.log(`   │ agy #1      │ agy #2      │                          │`);
+    console.log(`   │ Carbon      │ Argon       │                          │`);
     console.log(`   ├─────────────┼─────────────┤   통합 TUI 실시간 관제    │`);
-    console.log(`   │ agy #3      │ agy #4      │   (--watch)              │`);
+    console.log(`   │ Neon        │ Hydrogen    │   (--herdr-watch)        │`);
     console.log(`   └─────────────┴─────────────┴──────────────────────────┘\n`);
   } else {
     console.log(`\n📐 2개 탭 구성: [탭1: 4분할 agy] + [탭2: 통합 TUI 관제]를 생성합니다...`);
