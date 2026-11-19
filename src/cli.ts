@@ -10,6 +10,7 @@ import {
   attachTranscriptWatcher,
   findLatestTranscriptPath,
 } from './backend/transcriptMapper.ts';
+import { attachHerdrWatcher } from './backend/herdrWatcher.ts';
 import { parseKeyEvents, TerminalScreen, type KeyEvent } from './core/terminal.ts';
 import {
   applyDemoTime,
@@ -59,6 +60,8 @@ interface CliOptions {
   quad: boolean;
   quadRole: QuadRole | null;
   isHub: boolean;
+  herdrWatch: boolean;
+  herdrTerminals: string[] | null;
 }
 
 function parseArgs(argv: string[]): CliOptions {
@@ -86,6 +89,8 @@ function parseArgs(argv: string[]): CliOptions {
     quad: false,
     quadRole: null,
     isHub: false,
+    herdrWatch: false,
+    herdrTerminals: null,
   };
 
   for (let i = 0; i < argv.length; i++) {
@@ -201,6 +206,19 @@ function parseArgs(argv: string[]): CliOptions {
       case '--hub':
         opts.isHub = true;
         break;
+      case '--herdr-watch':
+        opts.mode = 'watch';
+        opts.herdrWatch = true;
+        break;
+      case '--watch-terminals': {
+        const raw = argv[++i] ?? '';
+        const list = raw
+          .split(',')
+          .map((s) => s.trim())
+          .filter(Boolean);
+        if (list.length > 0) opts.herdrTerminals = list;
+        break;
+      }
       case '--help':
       case '-h':
         opts.showHelp = true;
@@ -456,8 +474,12 @@ function main(): void {
     }
   }
 
-  // 트랜스크립트 실시간 감시 (watch 모드) 또는 일반 스트림 어댑터 연결
-  if (opts.watchMode || opts.mode === 'watch') {
+  // Herdr 활성 agy 터미널 실시간 감시 (--herdr-watch)
+  if (opts.herdrWatch) {
+    stopFileWatcher = attachHerdrWatcher(state, opts.herdrTerminals, renderNow);
+    const label = opts.herdrTerminals ? opts.herdrTerminals.join(', ') : '전체 활성 agy';
+    flashStatus(state, `Herdr 실시간 관제 연결: ${label}`, 5000);
+  } else if (opts.watchMode || opts.mode === 'watch') {
     if (!opts.filePath) {
       opts.filePath = findLatestTranscriptPath(opts.watchDir ?? undefined);
     }

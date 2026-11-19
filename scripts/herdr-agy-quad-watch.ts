@@ -174,7 +174,8 @@ async function main(): Promise<void> {
   const opts = parseArgs(process.argv.slice(2));
   await ensureHerdrRunning(opts.dryRun);
 
-  const tuiCmd = `cd ${shellEscape(PROJECT_ROOT)} && node ./src/cli.ts --watch`;
+  const buildTuiCmd = (terms: string[]) =>
+    `cd ${shellEscape(PROJECT_ROOT)} && node ./src/cli.ts --herdr-watch --watch-terminals ${shellEscape(terms.join(','))}`;
 
   if (opts.layout === 'split') {
     console.log(`\n📐 한 화면에 [좌측 4× agy 분할] + [우측 통합 TUI 관제] 패널을 생성합니다...`);
@@ -250,6 +251,7 @@ async function main(): Promise<void> {
         encoding: 'utf8',
       });
     }
+    const tuiCmd = buildTuiCmd([t1, t2, t3, t4]);
     console.log(`  📺 [TUI-Monitor] (${tTui}) -> ${tuiCmd}`);
     runJson(HC_BIN, ['send', tTui, tuiCmd], opts.dryRun);
 
@@ -320,6 +322,7 @@ async function main(): Promise<void> {
         encoding: 'utf8',
       });
     }
+    const tuiCmd = buildTuiCmd([t1, t2, t3, t4]);
     runJson(HC_BIN, ['send', tTui, tuiCmd], opts.dryRun);
 
     console.log(`\n✅ 구성 완료! 탭1(4분할 agy)과 탭2(통합 TUI 관제)가 생성되었습니다.\n`);
