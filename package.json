@@ -16,7 +16,9 @@
     "snapshot": "node ./src/cli.ts --snapshot --time 10 --cols 148 --rows 43",
     "herdr:quad": "node ./scripts/herdr-quad-launch.ts",
     "herdr:quad:live": "node ./scripts/herdr-quad-launch.ts --live",
-    "herdr:quad:watch": "node ./scripts/herdr-quad-launch.ts --watch"
+    "herdr:quad:watch": "node ./scripts/herdr-quad-launch.ts --watch",
+    "herdr:agy": "node ./scripts/herdr-agy-quad-watch.ts",
+    "herdr:agy:tabs": "node ./scripts/herdr-agy-quad-watch.ts --layout tabs"
   },
   "engines": {
     "node": ">=22.6.0"
